@@ -1,0 +1,7 @@
+{
+    "user": {
+        "id": 1,
+        "username": "jugador1"
+    }, 
+    "token": "mock.token.jugador1"
+}

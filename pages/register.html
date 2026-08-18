@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroids - Registro</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    
+    <div class="login-box">
+        <h1>☄️ ASTEROIDS</h1>
+        <p class="subtitle">Crea tu propia cuenta para guardar tus puntajes</p>
+        
+        <div id="register-error" class="error hidden"></div>
+
+        <input
+            id="reg-username"
+            type="text"
+            placeholder="Usuario (3-20 caracteres)"
+            autocomplete="username"
+            maxlength="20"        
+        />
+
+        <input
+            id="reg-email"
+            type="email"
+            placeholder="Email (opcional)"
+            autocomplete="email"
+        />
+
+        <input
+            id="reg-password"
+            type="password"
+            placeholder="Contraseña (minima 4 caracteres)"
+            autocomplete="new-password"
+        />
+
+        <input
+            id="reg-password2"
+            type="password"
+            placeholder="Confirmar contraseña"
+            autocomplete="new-password"
+        />
+
+        <button id="btn-register">Crear cuenta</button>
+        <a href="../index.html" class="back-link">Ya tengo cuenta</a>
+
+    </div>
+
+    <script src="../src/ui/register.js"></script>
+</body>
+</html>
