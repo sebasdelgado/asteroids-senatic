@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asteroids — Inicio</title>
+  <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-    <h1>Bienvenido Jugador</h1>
+
+  <div class="home-box">
+
+    <h1>☄️ ASTEROIDS</h1>
+    <p id="home-username" class="subtitle"></p>
+
+    <!-- Partida guardada (visible solo si existe) -->
+    <div id="saved-game" class="saved-game hidden">
+      <span id="saved-info"></span>
+      <div class="btn-row">
+        <button id="btn-continue">▶ Continuar partida</button>
+        <button id="btn-discard" class="secondary">✕ Descartar</button>
+      </div>
+    </div>
+
+    <div class="home-divider"></div>
+
+    <div class="btn-col">
+      <button id="btn-play">▶ Nueva partida</button>
+      <button id="btn-leaderboard" class="secondary">🏆 Tabla de puntajes</button>
+      <button id="btn-rankings"    class="secondary">📊 Rankings</button>
+      <button id="btn-profile"     class="secondary hidden">👤 Mi perfil</button>
+      <button id="btn-achievements" class="secondary hidden">🎖️ Logros</button>
+      <button id="btn-logout"      class="ghost">Cerrar sesión</button>
+    </div>
+
+  </div>
+
+  <script src="../src/ui/home.js"></script>
+
 </body>
 </html>

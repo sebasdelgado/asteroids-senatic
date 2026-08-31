@@ -1,0 +1,14 @@
+{
+  "unlocked": [
+    { "id": "first_game",     "unlocked_at": "2025-05-08 13:10:05" },
+    { "id": "score_1000",     "unlocked_at": "2025-05-09 14:20:22" },
+    { "id": "score_5000",     "unlocked_at": "2025-05-13 17:55:33" },
+    { "id": "score_10000",    "unlocked_at": "2025-05-17 18:45:10" },
+    { "id": "level_5",        "unlocked_at": "2025-05-15 19:30:44" },
+    { "id": "survive_3min",   "unlocked_at": "2025-05-16 20:10:05" },
+    { "id": "destroy_50",     "unlocked_at": "2025-05-16 20:10:05" },
+    { "id": "games_10",       "unlocked_at": "2025-05-17 18:45:10" },
+    { "id": "powerup_shield", "unlocked_at": "2025-05-11 20:15:08" },
+    { "id": "shoot_star",     "unlocked_at": "2025-05-14 21:05:20" }
+  ]
+}

@@ -1,9 +1,10 @@
-
+// ── login.js ──────────────────────────────────────────────────────────────────
+const SERVER = 'server';
 
 function showError(msg) {
-    const el = document.getElementById('login-error');
-    el.textContent = msg;
-    el.classList.remove('hidden');
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.classList.remove('hidden');
 }
 
 function clearError() {
@@ -11,86 +12,68 @@ function clearError() {
 }
 
 function goToHome(data) {
-    if(data) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-    }
-    window.location.href = "pages/home.html";
+  if (data) {
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.token);
+  }
+  window.location.href = 'pages/home.html';
 }
 
-//-- Login ----------------------//
+// ── Login ─────────────────────────────────────────────────────────────────────
 document.getElementById('btn-login').addEventListener('click', async () => {
+  clearError();
 
-    clearError();
+  const username  = document.getElementById('username').value.trim();
+  const password  = document.getElementById('password').value;
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
+  // ── Validaciones del lado cliente ─────────────────────────────────────────
+  if (!username) return showError('El nombre de usuario es obligatorio.');
+  if (username.length < 3) return showError('El usuario debe tener al menos 3 caracteres.');
+  if (!password) return showError('La contraseña es obligatoria.');
+  if (password.length < 4) return showError('La contraseña debe tener al menos 4 caracteres.');
 
-    //--Validaciones del lado del cliente ----//
-    if(!username) return showError('El nombre de usuario es obligatorio.');
-    if(username.length < 3) return showError('El usuario debe tener al menos 3 caracteres');
-
-    if (!password) return showError('La contraseña es obligatoria.');
-    if (password.length < 4) return showError('La contraseña debe tener al menos 4 caracteres.');
-
-
-    try {
-
-        const res = await fetch('./src/data/login.json');
-        const data = await res.json();
-        if(!res.ok) throw new Error(data.error);
-        goToHome(data);
-        
-        
-    } catch (error) {
-        showError(error.message);
-    }
+  try {
+    // const res = await fetch(`${SERVER}/login.php`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ username: username(), password: password() }),
+    // });
+    const res = await fetch('./src/data/login.json');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    goToHome(data);
+  } catch (e) { showError(e.message); }
 
 });
 
-//-- Registro ----------------//
+// ── Registro ──────────────────────────────────────────────────────────────────
 document.getElementById('btn-register').addEventListener('click', () => {
-
-    window.location.href = "pages/register.html";
-
+  window.location.href = 'pages/register.html';
 });
 
-//--Invitado -----------------//
+// ── Invitado ──────────────────────────────────────────────────────────────────
 document.getElementById('btn-guest').addEventListener('click', () => {
-
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    window.location.href = "pages/home.html";
-
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  window.location.href = 'pages/home.html';
 });
 
-//-- Enter en password para disparar login ------//
+// ── Enter en password dispara login ───────────────────────────────────────────
 document.getElementById('password').addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        document.getElementById('btn-login').click();
-    }
+  if (e.key === 'Enter') document.getElementById('btn-login').click();
 });
 
-//-- Limpiar Errores ---//
 document.getElementById('username').addEventListener('input', clearError);
 document.getElementById('password').addEventListener('input', clearError);
 
-//----Restaurar Sesion -------------//
+// ── Restaurar sesión ──────────────────────────────────────────────────────────
 (async () => {
-    
-    const token = localStorage.getItem('token');
-    if(!token) return;
-
-    // window.location.href = 'pages/home.html';
-
-    // try {
-    //     const res = await fetch();
-    //     if(res.ok) {
-            
-    //     }
-    // } catch {
-        
-    // }
-    
-
+  const token = localStorage.getItem('token');
+  if (!token) return;
+  try {
+    const res = await fetch(`${SERVER}/me.php`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.ok) window.location.href = 'pages/home.html';
+  } catch { }
 })();

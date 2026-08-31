@@ -1,58 +1,132 @@
-/*--- Reset -----------*/
-*, *::before, *::after { 
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* ── Reset ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: monospace;
-    color: #fff;
-    overflow: hidden;
+  background: #000;
+  /*Convierte en un contenedor flexbox */
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  /*(vh es alto visible de la pantalla del navegador) Ocupa todo el alto de la pantalla */
+  min-height: 100vh; 
+  font-family: monospace;
+  color: #fff;
+  /*Oculta los elementos que esten por fuera del body*/
+  overflow: hidden; 
 }
 
-.hidden { display: none !important;}
+.hidden { display: none !important; }
 
-/*--- Box base compartido-----------*/
-.login-box {
-    background: #0a0a0a;
-    border: 1px solid #333;
-    padding: 2rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    text-align: center;
-    max-height: 90vh;
-    overflow-y: auto;
+/* ── Canvas ──────────────────────────────────────────────────────────────────── */
+canvas { display: block; border: 1px solid #222; }
+
+/* ── Botón pausa flotante sobre el canvas ────────────────────────────────────── */
+.pause-btn {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 1rem;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  z-index: 10;
+  letter-spacing: normal;
+  text-transform: none;
+  font-weight: normal;
+  transition: background 0.15s;
+}
+.pause-btn:hover { background: rgba(255,255,255,0.18); }
+
+/* ── Menú de pausa ───────────────────────────────────────────────────────────── */
+.pause-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
 }
 
-.login-box { width: 320px; padding: 2.5rem 2rem; }
+.pause-box {
+  background: #0a0a0a;
+  border: 1px solid #333;
+  padding: 2rem 2.5rem;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: center;
+}
 
-/*--------Login ---------*/
-.login-box h1 { 
-    font-size: 2rem; 
-    letter-spacing: 0.15em; 
+.pause-box h2 {
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
 }
-.login-box .subtitle { 
-    font-size: 0.75rem; 
-    color: rgba(255,255,255,0.45); 
+
+/* ── Box base compartido ─────────────────────────────────────────────────────── */
+.login-box,
+.home-box,
+.gameover-box,
+.profile-box,
+.lb-box,
+.achievements-box {
+  background: #0a0a0a;
+  border: 1px solid #333;
+  /*1rem equivale a 16px*/
+  padding: 2rem 2.5rem; 
+  display: flex;
+  flex-direction: column;
+  /*espacio entre hijos */
+  gap: 1.25rem; 
+  text-align: center;
+  /*90% de la pantalla Si el contenido crece más, no se sale de pantalla.*/
+  max-height: 90vh; 
+  /* Si el contenido supera 90vh, aparece scroll. */
+  overflow-y: auto;
 }
+
+.login-box     { width: 320px; padding: 2.5rem 2rem; }
+.home-box      { width: 320px; }
+.gameover-box  { min-width: 360px; }
+.profile-box   { min-width: 420px; }
+.lb-box        { min-width: 420px; }
+.achievements-box { min-width: 440px; }
+
+/* ── Home ────────────────────────────────────────────────────────────────────── */
+.home-box h1   { font-size: 2rem; letter-spacing: 0.15em; }
+.home-divider  { border-top: 1px solid #222; }
+
+.saved-game {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── Login ───────────────────────────────────────────────────────────────────── */
+.login-box h1      { font-size: 2rem; letter-spacing: 0.15em; }
+.login-box .subtitle,
+.home-box .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
 
 .login-box input {
-    background: #111;
-    border: 1px solid #333;
-    color: #fff;
-    font-family: monospace;
-    font-size: 0.9rem;
-    outline: none;
-    width: 100%;
+  background: #111;
+  border: 1px solid #333;
+  color: #fff;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem;
+  /*Quita la selección del navegador */
+  outline: none;
+  width: 100%;
 }
-
 .login-box input:focus { border-color: #888; }
 
 .back-link {
@@ -62,51 +136,142 @@ body {
 }
 .back-link:hover { color: #fff; }
 
-/*----Error ---------------------------------*/
-.error {
-    background: rgba(255, 60, 60, 0.15);
-    border: 1px solid rgba(255, 60, 60, 0.4);
-    color: #ff6b6b;
-    font-size: 0.8rem;
-    padding: 0.4rem 0.6rem;
-}
-
-/*------Botones--------------------*/
-.btn-row { display: flex; gap: 0.5rem;}
+/* ── Botones ─────────────────────────────────────────────────────────────────── */
+.btn-row { display: flex; gap: 0.5rem; }
+.btn-col { display: flex; flex-direction: column; gap: 0.5rem; }
 
 button {
-    flex: 1;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    font-family: monospace;
-    font-size: 0.85rem;
-    font-weight: bold;
-    padding: 0.6rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: opacity 0.15s;
+  flex: 1;
+  background: #fff;
+  color: #000;
+  border: none;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 0.6rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: opacity 0.15s;
 }
-
-button:hover { opacity: 0.8;}
+button:hover { opacity: 0.8; }
 
 button.secondary {
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #555;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #555;
 }
-
 button.ghost {
-    background: transparent;
-    color: rgba(255, 255, 255, 0.35);
-    border: none;
-    font-size: 0.75rem;
-    text-transform: none;
-    letter-spacing: normal;
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  border: none;
+  font-size: 0.75rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
+/* ── Error ───────────────────────────────────────────────────────────────────── */
+.error {
+  background: rgba(255,60,60,0.15);
+  border: 1px solid rgba(255,60,60,0.4);
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+}
 
+/* ── Stats grid ──────────────────────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.stat {
+  background: #111;
+  border: 1px solid #222;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.stat-value { font-size: 1.4rem; font-weight: bold; }
 
+/* ── Game Over ───────────────────────────────────────────────────────────────── */
+.gameover-title { font-size: 2.5rem; letter-spacing: 0.2em; }
 
+.personal-best {
+  background: #111;
+  border: 1px solid #333;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+.personal-best.new-record { border-color: #ffd700; color: #ffd700; }
 
+/* ── Profile ─────────────────────────────────────────────────────────────────── */
+.profile-header { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+.profile-header h2 { font-size: 1.6rem; letter-spacing: 0.1em; }
+.profile-tag { font-size: 0.7rem; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+.section-title {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: left;
+  border-bottom: 1px solid #222;
+  padding-bottom: 0.4rem;
+}
+
+/* ── Tablas ──────────────────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { color: rgba(255,255,255,0.4); font-weight: normal; padding: 0.3rem 0.5rem; border-bottom: 1px solid #222; }
+td { padding: 0.45rem 0.5rem; }
+td.date { color: rgba(255,255,255,0.35); font-size: 0.75rem; }
+tr.gold   td { color: #ffd700; }
+tr.silver td { color: #c0c0c0; }
+tr.bronze td { color: #cd7f32; }
+tr.my-row td { background: rgba(255,255,255,0.04); }
+
+/* ── Leaderboard / Rankings ──────────────────────────────────────────────────── */
+.lb-box h2        { font-size: 1.4rem; letter-spacing: 0.1em; }
+.lb-actions       { display: flex; gap: 0.5rem; }
+.filter-row       { display: flex; gap: 0.5rem; }
+
+.filter-btn {
+  flex: 1;
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  border: 1px solid #333;
+  font-size: 0.75rem;
+  padding: 0.4rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+.filter-btn.active { background: #fff; color: #000; border-color: #fff; }
+
+/* ── Achievements ────────────────────────────────────────────────────────────── */
+.achievements-box h2 { font-size: 1.4rem; letter-spacing: 0.1em; }
+.achievements-summary { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+#achievements-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 340px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.ach-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #222;
+  background: #111;
+}
+.ach-card.locked  { opacity: 0.4; }
+.ach-icon         { font-size: 1.4rem; width: 2rem; text-align: center; flex-shrink: 0; }
+.ach-info         { display: flex; flex-direction: column; gap: 0.15rem; }
+.ach-info strong  { font-size: 0.85rem; }
+.ach-info span    { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
