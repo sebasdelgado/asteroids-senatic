@@ -5,90 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asteroids — Rankings</title>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #1 — Enlazar la hoja de estilos                       ║
-  ║                                                              ║
-  ║  Esta página está dentro de pages/.                         ║
-  ║  El archivo styles.css está UN nivel arriba (en la raíz).   ║
-  ║  Ruta correcta: ../styles.css                               ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+  <link rel="stylesheet" href="../styles.css" />
 
 </head>
 <body>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #2 — Crear el contenedor principal                    ║
-  ║                                                              ║
-  ║  Crea un <div> con clase "lb-box" que contenga:             ║
-  ║                                                              ║
-  ║  Un <h2> con el texto: 📊 Rankings                          ║
-  ║                                                              ║
-  ║  (los filtros y la tabla van dentro de este mismo div,      ║
-  ║   los agregarás en los próximos TODOs)                       ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+  <div class="lb-box">
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #3 — Agregar la fila de filtros de período            ║
-  ║                                                              ║
-  ║  Dentro del div.lb-box agrega un <div> con clase            ║
-  ║  "filter-row" que contenga TRES botones:                    ║
-  ║                                                              ║
-  ║  Botón 1:  clases="filter-btn active"                       ║
-  ║            atributo data-period="all"                       ║
-  ║            texto → "Todo el tiempo"                          ║
-  ║            (este empieza ACTIVO — es el filtro por defecto) ║
-  ║                                                              ║
-  ║  Botón 2:  clase="filter-btn"                               ║
-  ║            atributo data-period="week"                       ║
-  ║            texto → "Esta semana"                             ║
-  ║                                                              ║
-  ║  Botón 3:  clase="filter-btn"                               ║
-  ║            atributo data-period="today"                      ║
-  ║            texto → "Hoy"                                     ║
-  ║                                                              ║
-  ║  Pista: el atributo data-period es un "data attribute"      ║
-  ║  personalizado. El JS lo lee con btn.dataset.period          ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+    <h2>📊 Rankings</h2>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #4 — Contenido y botones finales                      ║
-  ║                                                              ║
-  ║  Después de los filtros, dentro del div.lb-box agrega:      ║
-  ║                                                              ║
-  ║  1. Un <div> con id="rankings-content" y texto "Cargando…"  ║
-  ║     (el JS reemplazará este contenido con la tabla)         ║
-  ║                                                              ║
-  ║  2. Un <div> con clase "lb-actions" que contenga DOS botones:║
-  ║                                                              ║
-  ║     · id="btn-home"                                         ║
-  ║       texto → "🏠 Inicio"                                   ║
-  ║       (sin clase especial = botón blanco primario)           ║
-  ║                                                              ║
-  ║     · id="btn-profile"  clases="secondary hidden"           ║
-  ║       texto → "👤 Mi perfil"                                ║
-  ║       (empieza oculto; el JS lo muestra si hay sesión)       ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+    <div class="filter-row">
+      <button class="filter-btn active" data-period="all">Todo el tiempo</button>
+      <button class="filter-btn" data-period="week">Esta semana</button>
+      <button class="filter-btn" data-period="today">Hoy</button>
+    </div>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #5 — Enlazar el script de JavaScript                  ║
-  ║                                                              ║
-  ║  Al final del <body> enlaza el archivo JS.                  ║
-  ║  Ruta desde pages/: ../src/ui/rankings.js                   ║
-  ║                                                              ║
-  ║  ⚠️  rankings.js NO usa import/export.                     ║
-  ║  Por eso NO lleva type="module".                            ║
-  ║  Usa: <script src="../src/ui/rankings.js"></script>         ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+    <div id="rankings-content">Cargando…</div>
+
+    <div class="lb-actions">
+      <button id="btn-home"    >🏠 Inicio</button>
+      <button id="btn-profile" class="secondary hidden">👤 Mi perfil</button>
+    </div>
+
+  </div>
+
+  <script src="../src/ui/rankings.js"></script>
 
 </body>
 </html>
