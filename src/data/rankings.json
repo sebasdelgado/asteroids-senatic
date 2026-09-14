@@ -1,0 +1,19 @@
+{
+  "scores": [
+    { "username": "estrella99",  "score": 21400, "level": 14, "date": "2026-09-14 09:12:05" },
+    { "username": "cosmicx",     "score": 18700, "level": 12, "date": "2026-09-14 08:30:44" },
+    { "username": "jugador1",    "score": 15200, "level": 10, "date": "2026-09-13 22:15:10" },
+    { "username": "asteroidero", "score": 12800, "level": 9,  "date": "2026-09-13 19:40:33" },
+    { "username": "piloto42",    "score": 10500, "level": 8,  "date": "2026-09-12 21:05:18" },
+    { "username": "galaxia7",    "score": 9200,  "level": 7,  "date": "2026-09-11 17:50:02" },
+    { "username": "nebulosa",    "score": 7600,  "level": 6,  "date": "2026-09-10 20:22:47" },
+    { "username": "darkstar",    "score": 6300,  "level": 5,  "date": "2026-09-09 23:08:59" },
+    { "username": "vortex",      "score": 5100,  "level": 5,  "date": "2026-09-09 15:33:21" },
+    { "username": "nova22",      "score": 4200,  "level": 4,  "date": "2026-09-08 16:25:33" },
+    { "username": "orbita_x",    "score": 3400,  "level": 3,  "date": "2026-09-07 18:14:50" },
+    { "username": "meteorito",   "score": 2700,  "level": 3,  "date": "2026-09-06 14:47:12" },
+    { "username": "rookie01",    "score": 1900,  "level": 2,  "date": "2026-09-05 11:02:39" },
+    { "username": "luna_gris",   "score": 1200,  "level": 2,  "date": "2026-09-04 10:18:27" },
+    { "username": "chispa",      "score": 650,   "level": 1,  "date": "2026-09-03 09:05:11" }
+  ]
+}
