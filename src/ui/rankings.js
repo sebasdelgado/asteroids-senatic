@@ -98,16 +98,3 @@ function render(scores, period) {
   
 
 }
-
-
-// TODO #7 — Cargar el período inicial al arrancar
-// ─────────────────────────────────────────────────────────────────────────────
-// Al final del archivo, fuera de cualquier función, llama a:
-//
-//   loadRankings('all');
-//
-// Esto hace que la tabla se cargue automáticamente con el filtro
-// "Todo el tiempo" en cuanto la página termina de cargar el script,
-// sin que el usuario tenga que hacer clic en ningún filtro.
-
-/* TU CÓDIGO AQUÍ */
