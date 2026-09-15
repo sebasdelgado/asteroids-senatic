@@ -9,6 +9,8 @@ if (user) {
 
 let currentPeriod = 'all';
 
+loadRankings(currentPeriod);
+
 document.getElementById('btn-home').addEventListener('click', () => { 
   window.location.href = 'home.html'; 
 });
@@ -31,26 +33,6 @@ document.querySelectorAll('.filter-btn').forEach( btn => {
   });
 });
 
-
-// Al hacer clic en un filtro:
-//   1. Quita la clase 'active' de TODOS los botones de filtro:
-//        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-//   2. Agrega la clase 'active' SOLO al botón que se clickeó:
-//        btn.classList.add('active');
-//   3. Actualiza la variable currentPeriod con el valor de data-period:
-//        currentPeriod = btn.dataset.period;
-//   4. Llama a loadRankings(currentPeriod) para recargar la tabla.
-//
-// Estructura:
-//   document.querySelectorAll('.filter-btn').forEach(btn => {
-//     btn.addEventListener('click', () => {
-//       // ... pasos 1 a 4 ...
-//     });
-//   });
-
-/* TU CÓDIGO AQUÍ */
-
-
 // ─────────────────────────────────────────────────────────────────────────────
 // loadRankings — carga los rankings del período indicado
 // ─────────────────────────────────────────────────────────────────────────────
@@ -60,20 +42,10 @@ async function loadRankings(period) {
   el.textContent = 'Cargando…';
 
   try {
-    // TODO #4 — Hacer el fetch al servidor con el período
-    // ───────────────────────────────────────────────────────
-    // Esta pantalla hace fetch DIRECTO al backend PHP, pasando
-    // el período y un límite de 15 resultados como parámetros de URL:
-    //
-    //   const res  = await fetch(`${SERVER}/rankings.php?period=${period}&limit=15`);
-    //   const data = await res.json();
-    //
-    // Luego llama a render(data.scores, period) para mostrar la tabla.
-    //
-    // ⚠️  Si el backend PHP aún no está conectado, este fetch va a fallar
-    // y debería caer en el catch — eso es correcto.
 
-    /* TU CÓDIGO AQUÍ */
+    const res = await fetch('../src/data/rankings.json');
+    const data = await res.json();
+    render(data.scores, period);
 
   } catch {
     el.textContent = 'No se pudo cargar la tabla.';
@@ -89,88 +61,42 @@ function render(scores, period) {
   const el     = document.getElementById('rankings-content');
   const myUser = user?.username;
 
-  // TODO #5a — Manejar el caso de array vacío con mensaje según el período
-  // ─────────────────────────────────────────────────────────────────────────
-  // Si scores está vacío, muestra un mensaje DISTINTO según el período:
-  //
-  //   period === 'all'   → "No hay puntajes registrados."
-  //   period === 'week'  → "No hay puntajes esta semana."
-  //   period === 'today' → "No hay puntajes hoy."
-  //
-  // Pista: usa un objeto como diccionario de etiquetas:
-  //   const labels = { all: 'registrados', week: 'esta semana', today: 'hoy' };
-  //
-  // Luego construye el mensaje:
-  //   `No hay puntajes ${labels[period]}.`
-  //
-  // Estructura:
-  //   if (!scores.length) {
-  //     const labels = { all: 'registrados', week: 'esta semana', today: 'hoy' };
-  //     el.textContent = `No hay puntajes ${labels[period]}.`;
-  //     return;
-  //   }
-
-  /* TU CÓDIGO AQUÍ */
-
+  if(!scores.length) {
+    const labels = { all: 'registrados', week: 'esta semana', today: 'hoy'};
+    el.textContent = `No hay puntajes ${labels[period]}`;
+    return;
+  }
 
   // Medallas para los tres primeros lugares
   const medals = ['🥇', '🥈', '🥉'];
 
-  // TODO #5b — Construir las filas de la tabla, incluyendo my-row
-  // ─────────────────────────────────────────────────────────────────────────
-  // Usa scores.map() para convertir cada objeto puntaje en un string HTML <tr>.
-  //
-  // Cada objeto "s" tiene: s.username, s.score, s.level, s.date
-  //
-  // Para cada fila necesitas calcular DOS cosas:
-  //
-  //   a) La clase de posición (igual que en Leaderboard):
-  //        i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''
-  //
-  //   b) La clase de "fila propia" — NUEVO en esta pantalla:
-  //        si s.username === myUser, agrega también la clase 'my-row'
-  //
-  //   Ambas clases pueden combinarse en el mismo <tr>, separadas por espacio:
-  //     <tr class="gold my-row">   o   <tr class="silver">   o   <tr class="my-row">
-  //
-  // Para el nombre de usuario, si es la fila propia, agrega el texto ' ← tú':
-  //   ${s.username}${s.username === myUser ? ' ← tú' : ''}
-  //
-  // El resto de columnas (puntaje formateado, nivel, fecha recortada)
-  // es igual a Leaderboard:
-  //   · Number(s.score).toLocaleString()
-  //   · Nv. ${s.level}
-  //   · s.date.slice(0, 10)
-  //
-  // Estructura de cada fila:
-  //   <tr class="${clasePosicion} ${claseMiFila}">
-  //     <td>${medals[i] ?? i + 1}</td>
-  //     <td>${s.username}${esmiFila ? ' ← tú' : ''}</td>
-  //     <td>${Number(s.score).toLocaleString()}</td>
-  //     <td>Nv. ${s.level}</td>
-  //     <td class="date">${s.date.slice(0, 10)}</td>
-  //   </tr>
-  //
-  // Al final del map usa .join('') para unir todas las filas.
+  const rows = scores.map((s, i ) => `
+    <tr class="${ i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : ''}">
+      <td>${medals[i] ?? i + 1}</td>
+      <td>${s.username}</td>
+      <td>${Number(s.score).toLocaleString()}</td>
+      <td>Nv. ${s.level}</td>
+      <td class="date">${s.date.slice(0, 10)}</td>
+    </tr>
+  `).join('');
 
-  const rows = /* TU CÓDIGO AQUÍ → scores.map(...).join('') */ '';
+  el.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Jugador</th>
+          <th>Puntaje</th>
+          <th>Nivel</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
 
+  
 
-  // TODO #6 — Inyectar la tabla completa en #rankings-content
-  // ─────────────────────────────────────────────────────────────────────────
-  // Igual que en Leaderboard: usa innerHTML para poner el HTML de la
-  // tabla dentro de #rankings-content.
-  //
-  //   el.innerHTML = `
-  //     <table>
-  //       <thead>
-  //         <tr><th>#</th><th>Jugador</th><th>Puntaje</th><th>Nivel</th><th>Fecha</th></tr>
-  //       </thead>
-  //       <tbody>${rows}</tbody>
-  //     </table>
-  //   `;
-
-  /* TU CÓDIGO AQUÍ */
 }
 
 
