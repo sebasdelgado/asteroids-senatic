@@ -1,62 +1,37 @@
-// ── rankings.js ───────────────────────────────────────────────────────────────
-// Pantalla de rankings con filtros de período (hoy / esta semana / todo el tiempo).
-//
-// Flujo general que debes lograr:
-//   1. Leer el usuario de localStorage y mostrar btn-profile si hay sesión.
-//   2. Conectar los botones de navegación (Inicio, Mi perfil).
-//   3. Conectar los filtros de período.
-//   4. Cargar los rankings desde el servidor según el período.
-//   5. Renderizar la tabla, resaltando el top 3 y la fila del usuario actual.
-//   6. Cargar el período inicial ('all') al arrancar.
-//
-// ─────────────────────────────────────────────────────────────────────────────
 
 const SERVER = '../server';
 
+const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
-// TODO #1 — Leer el usuario y mostrar btn-profile
-// ─────────────────────────────────────────────────────────────────────────────
-// Lee el usuario de localStorage (o null si no hay sesión).
-//
-//   const user = localStorage.getItem('user')
-//     ? JSON.parse(localStorage.getItem('user'))
-//     : null;
-//
-// Si user existe, muestra el botón Mi perfil (oculto por defecto):
-//
-//   if (user) {
-//     document.getElementById('btn-profile').classList.remove('hidden');
-//   }
-//
-// También declara una variable para guardar el período actual,
-// inicializada en 'all':
-//
-//   let currentPeriod = 'all';
+if (user) {
+  document.getElementById('btn-profile').classList.remove('hidden');
+}
 
-/* TU CÓDIGO AQUÍ */
+let currentPeriod = 'all';
 
+document.getElementById('btn-home').addEventListener('click', () => { 
+  window.location.href = 'home.html'; 
+});
 
-// TODO #2 — Conectar los botones de navegación
-// ─────────────────────────────────────────────────────────────────────────────
-// Conecta los dos botones:
-//
-//   btn-home    → navega a 'home.html'
-//   btn-profile → navega a 'profile.html'
-//
-// Usa addEventListener('click', () => { window.location.href = '...'; })
-// para cada uno.
+document.getElementById('btn-profile').addEventListener('click', () => { 
+  window.location.href = 'profile.html'; 
+});
 
-/* TU CÓDIGO AQUÍ */
+document.querySelectorAll('.filter-btn').forEach( btn => {
+  btn.addEventListener('click', () => {
+    
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+    currentPeriod = btn.dataset.period;
+    loadRankings(currentPeriod);
+
+  });
+});
 
 
-// TODO #3 — Conectar los filtros de período
-// ─────────────────────────────────────────────────────────────────────────────
-// Hay tres botones con clase "filter-btn", cada uno con un atributo
-// data-period ('all', 'week' o 'today').
-//
-// Usa document.querySelectorAll('.filter-btn') para obtener los tres,
-// y .forEach() para conectar el evento click de cada uno.
-//
 // Al hacer clic en un filtro:
 //   1. Quita la clase 'active' de TODOS los botones de filtro:
 //        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
