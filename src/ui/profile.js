@@ -8,6 +8,7 @@
 
 
 const SERVER = '../server';
+console.log("hola mundo")
 
 
 // TODO #2 — Ejecutar la lógica principal con requireLogin

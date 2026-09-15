@@ -5,119 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asteroids — Mi Perfil</title>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #1 — Enlazar la hoja de estilos                       ║
-  ║                                                              ║
-  ║  Esta página está dentro de pages/.                         ║
-  ║  El archivo styles.css está UN nivel arriba (en la raíz).   ║
-  ║  Ruta correcta: ../styles.css                               ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+  <link rel="stylesheet" href="../styles.css" />
 
 </head>
 <body>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #2 — Crear el contenedor principal y el encabezado    ║
-  ║                                                              ║
-  ║  Crea un <div> con clase "profile-box" que contenga:        ║
-  ║                                                              ║
-  ║  Un <div> con clase "profile-header" que tenga dentro:      ║
-  ║    · Un <h2> con id="profile-username" y texto "—"          ║
-  ║      (el JS reemplazará este valor con el nombre del usuario)║
-  ║    · Un <span> con clase "profile-tag" y texto "Jugador"    ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+  
+  <div class="profile-box">
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #3 — Cuadrícula de estadísticas                       ║
-  ║                                                              ║
-  ║  Dentro del div.profile-box agrega un <div class="stats-grid">║
-  ║  con CUATRO bloques <div class="stat"> en este orden:       ║
-  ║                                                              ║
-  ║  Bloque 1 — Mejor puntaje:                                  ║
-  ║    <span class="stat-label">Mejor puntaje</span>            ║
-  ║    <span class="stat-value" id="best-score">—</span>        ║
-  ║                                                              ║
-  ║  Bloque 2 — Nivel máximo:                                   ║
-  ║    <span class="stat-label">Nivel máximo</span>             ║
-  ║    <span class="stat-value" id="best-level">—</span>        ║
-  ║                                                              ║
-  ║  Bloque 3 — Partidas jugadas:                               ║
-  ║    <span class="stat-label">Partidas jugadas</span>         ║
-  ║    <span class="stat-value" id="total-games">—</span>       ║
-  ║                                                              ║
-  ║  Bloque 4 — Puntaje promedio:                               ║
-  ║    <span class="stat-label">Puntaje promedio</span>         ║
-  ║    <span class="stat-value" id="avg-score">—</span>         ║
-  ║                                                              ║
-  ║  ⚠️  El valor inicial de cada span id="..." es "—"          ║
-  ║  El JS lo reemplaza con los valores calculados del historial.║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+    <div id="profile-header">
+      <h2 id="profile-username">—</h2>
+      <span class="profile-tag">Jugador</span>
+    </div>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #4 — Sección de historial de partidas                 ║
-  ║                                                              ║
-  ║  Después de la cuadrícula, dentro del div.profile-box       ║
-  ║  agrega:                                                     ║
-  ║                                                              ║
-  ║  1. Un <h3> con clase "section-title" y texto               ║
-  ║     "Últimas partidas"                                      ║
-  ║                                                              ║
-  ║  2. Un <div> con id="history-content" y texto "Cargando…"   ║
-  ║     (el JS construirá aquí la tabla del historial)          ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+    <div class="stats-grid">
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #5 — Columna de botones de navegación                 ║
-  ║                                                              ║
-  ║  Agrega un <div class="btn-col"> con SEIS botones           ║
-  ║  en este orden exacto:                                      ║
-  ║                                                              ║
-  ║  · id="btn-home"          texto → "🏠 Inicio"               ║
-  ║    (sin clase extra = botón primario blanco)                 ║
-  ║                                                              ║
-  ║  · id="btn-play"          clase="secondary"                 ║
-  ║    texto → "▶ Jugar"                                        ║
-  ║                                                              ║
-  ║  · id="btn-leaderboard"   clase="secondary"                 ║
-  ║    texto → "🏆 Tabla de puntajes"                           ║
-  ║                                                              ║
-  ║  · id="btn-rankings"      clase="secondary"                 ║
-  ║    texto → "📊 Rankings"                                    ║
-  ║                                                              ║
-  ║  · id="btn-achievements"  clase="secondary"                 ║
-  ║    texto → "🎖️ Mis logros"                                  ║
-  ║                                                              ║
-  ║  · id="btn-logout"        clase="ghost"                     ║
-  ║    texto → "Cerrar sesión"                                  ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+      <div class="stat">
+        <span class="stat-label">Mejor puntaje</span> 
+        <span class="stat-value" id="best-score">—</span>   
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  TODO #6 — Enlazar el script de JavaScript                  ║
-  ║                                                              ║
-  ║  Al final del <body> enlaza el módulo JS que controla        ║
-  ║  esta pantalla.                                              ║
-  ║                                                              ║
-  ║  Ruta: ../src/ui/profile.js                                 ║
-  ║                                                              ║
-  ║  ⚠️  Este archivo SÍ usa import/export (importa             ║
-  ║  requireLogin de auth-guard.js), por eso NECESITA           ║
-  ║  type="module" en la etiqueta <script>.                     ║
-  ║                                                              ║
-  ║  Usa: <script type="module" src="../src/ui/profile.js">     ║
-  ║        </script>                                            ║
-  ╚══════════════════════════════════════════════════════════════╝
-  -->
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">Nivel máximo</span>  
+        <span class="stat-value" id="best-level">—</span>
+
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">Partidas jugadas</span>
+        <span class="stat-value" id="total-games">—</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-label">Puntaje promedio</span>   
+        <span class="stat-value" id="avg-score">—</span> 
+      </div>
+
+    </div>
+
+    <h3 class="section-title">Últimas partidas</h3>
+    <div id="history-content">Cargando…</div>
+
+    <div class="btn-col">
+
+      <button id="btn-home">🏠 Inicio</button>
+      <button id="btn-play" class="secondary" >▶ Jugar</button>
+      <button id="btn-leaderboard" class="secondary">🏆 Tabla de puntajes</button>
+      <button id="btn-rankings" class="secondary">📊 Rankings</button> 
+      <button id="btn-achievements" class="secondary">🎖️ Mis logros</button>
+      <button id="btn-logout" class="ghost">Cerrar sesión</button>
+
+    </div>
+    
+  </div>
+
+  <script type="module" src="../src/ui/profile.js"></script>
 
 </body>
 </html>
