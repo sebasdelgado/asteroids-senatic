@@ -1,14 +1,7 @@
-// TODO #1 — Importar requireLogin
-// ─────────────────────────────────────────────────────────────────────────────
-// Importa requireLogin desde auth-guard.js (misma carpeta src/ui/).
-//
-// Sintaxis:  import { requireLogin } from './auth-guard.js';
 
-/* TU CÓDIGO AQUÍ */
-
+import { requireLogin } from './auth-guard.js';
 
 const SERVER = '../server';
-console.log("hola mundo")
 
 
 // TODO #2 — Ejecutar la lógica principal con requireLogin
@@ -18,100 +11,81 @@ console.log("hola mundo")
 //
 // Dentro del if debes hacer:
 //
-//   a) Leer user y token de localStorage:
-//
-//   b) Mostrar el nombre de usuario en #profile-username:
 //
 //   c) Conectar los seis botones (ver TODO #3).
 //
 //   d) Hacer fetch al historial (ver TODO #4), dentro de try/catch.
 
-/* TU CÓDIGO AQUÍ */
+//TODO Descomentar
+// if (await requireLogin() ) {
+if( true ) {
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
 
-// TODO #3 — Conectar los seis botones de navegación
-// ─────────────────────────────────────────────────────────────────────────────
-// Todos los botones van dentro del if del TODO #2.
-//
-//
-// Tabla de destinos (todos en la misma carpeta pages/):
-//   btn-home          →  'home.html'
-//   btn-play          →  'game.html'
-//   btn-leaderboard   →  'leaderboard.html'
-//   btn-rankings      →  'rankings.html'
-//   btn-achievements  →  'achievements.html'
-//
-// Para btn-logout: Remover del local storage el token y el user y redireccionar a index.html
+  document.getElementById('profile-username').textContent = user.username;
 
+  document.getElementById('btn-home').addEventListener('click', () => {
+    window.location.href = 'home.html';
+  });
 
+  document.getElementById('btn-play').addEventListener('click', () => {
+    window.location.href = 'game.html';
+  });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TODO #4 — Hacer fetch al historial de puntajes
-// ─────────────────────────────────────────────────────────────────────────────
-// Dentro del if del TODO #2, después de conectar los botones, agrega un
-// bloque try/catch para cargar los datos:
-//
-//   try {
-//     // Fetch al JSON simulado
-//     renderStats(data.scores);    ← calcula y muestra las estadísticas
-//     renderHistory(data.scores);  ← construye y muestra el historial
-//   } catch {
-//     document.getElementById('history-content').textContent =
-//       'No se pudo cargar el historial.';
-//   }
+  document.getElementById('btn-leaderboard').addEventListener('click', () => {
+    window.location.href = 'leaderboard.html';
+  });
 
+  document.getElementById('btn-rankings').addEventListener('click', () => {
+    window.location.href = 'rankings.html';
+  });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// renderStats — calcula y muestra las cuatro estadísticas
-// ─────────────────────────────────────────────────────────────────────────────
+  document.getElementById('btn-achievements').addEventListener('click', () => {
+    window.location.href = 'achievements.html';
+  });
+
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '../index.html';
+  });
+
+  try {
+    // Fetch al JSON simulado
+    const res = await fetch('../src/data/profile.json');
+    const data = await res.json();
+
+    renderStats(data.scores);
+    renderHistory(data.scores);
+  } catch {
+    document.getElementById('history-content').textContent =
+      'No se pudo cargar el historial.';
+  }
+
+}
+
 
 function renderStats(scores) {
 
-  // TODO #5a — Manejar el caso de historial vacío
-  // ─────────────────────────────────────────────────────────────────────────
-  // Si scores está vacío, pon "0" en los cuatro elementos y termina (return).
+  if( !scores.length ) {
+    document.getElementById('best-score').textContent  = '0';
+    document.getElementById('best-level').textContent  = '0';
+    document.getElementById('total-games').textContent = '0';
+    document.getElementById('avg-score').textContent   = '0';
+    return;
+  }
 
+  const best = scores[0].score;
+  const maxLvl = Math.max(...scores.map(s => s.level));
+  const total = scores.length;
+  const avg = Math.round( scores.reduce((sum, s) => sum + s.score, 0) / total );
 
-  /* TU CÓDIGO AQUÍ */
+  document.getElementById('best-score').textContent  = best.toLocaleString();
+  document.getElementById('best-level').textContent  = maxLvl;
+  document.getElementById('total-games').textContent = total;
+  document.getElementById('avg-score').textContent   = avg.toLocaleString();
 
-
-  // TODO #5b — Calcular las cuatro estadísticas
-  // ─────────────────────────────────────────────────────────────────────────
-  // Cada objeto "s" del array tiene: s.score, s.level, s.date
-  //
-  // Las cuatro estadísticas a calcular:
-  //
-  //   best   → el puntaje más alto: scores[0].score
-  //            (el array ya viene ordenado de mayor a menor desde el servidor)
-  //
-  //   maxLvl → el nivel más alto alcanzado en cualquier partida:
-  //            Math.max(...scores.map(s => s.level))
-  //            (spread + map para extraer todos los niveles y quedarse con el mayor)
-  //
-  //   total  → cantidad de partidas: scores.length
-  //
-  //   avg    → promedio de puntajes, redondeado al entero más cercano:
-  //            Math.round( scores.reduce((sum, s) => sum + s.score, 0) / total )
-  //            (reduce suma todos los puntajes, dividimos por total, Math.round redondea)
-  //
-  // Pistas:
-  //   · Math.max(...array)  → saca el máximo de un array de números
-  //   · array.reduce((acumulador, elemento) => ..., valorInicial) → acumula un valor
-  //   · Math.round(numero) → redondea al entero más cercano
-
-  /* TU CÓDIGO AQUÍ */
-
-
-  // TODO #5c — Mostrar las estadísticas en el DOM
-  // ─────────────────────────────────────────────────────────────────────────
-  // Pon cada valor calculado en su elemento correspondiente:
-  //
-  //   #best-score   → best formateado con separador de miles: best.toLocaleString()
-  //   #best-level   → maxLvl (sin formato especial)
-  //   #total-games  → total (sin formato especial)
-  //   #avg-score    → avg formateado con separador de miles: avg.toLocaleString()
-
-  /* TU CÓDIGO AQUÍ */
 }
 
 
