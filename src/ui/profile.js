@@ -89,43 +89,37 @@ function renderStats(scores) {
 }
 
 
-// ─────────────────────────────────────────────────────────────────────────────
-// renderHistory — construye la tabla del historial e inyecta en #history-content
-// ─────────────────────────────────────────────────────────────────────────────
-
 function renderHistory(scores) {
+  
   const el = document.getElementById('history-content');
 
-  // TODO #6a — Manejar el caso de historial vacío
-  // ─────────────────────────────────────────────────────────────────────────
-  // Si scores está vacío, muestra un mensaje y termina:
+  if( !scores.length ) {
+    el.textContent = 'Aún no has jugado ninguna partida';
+    return;
+  }
+
+  const rows =  scores.map((s, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td>${s.score.toLocaleString()}</td>
+      <td>Nv. ${s.level}</td>
+      <td class="date">${s.date.slice(0,10)}</td>
+    </tr>
+  `).join('');
+
+  el.innerHTML =`
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Puntaje</th>
+          <th>Nivel</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
 
 
-  /* TU CÓDIGO AQUÍ */
-
-
-  // TODO #6b — Construir las filas de la tabla
-  // ─────────────────────────────────────────────────────────────────────────
-  // Usa scores.map() para convertir cada objeto en un string HTML <tr>.
-  //
-  // A diferencia de Leaderboard y Rankings, aquí NO hay medallas ni
-  // resaltado de posición — todas las filas son iguales.
-  //
-  // Columnas de cada fila:
-  //   <td> número de posición: </td>
-  //   <td> puntaje con separador de miles: </td>
-  //   <td> "Nv. X" donde X es el nivel </td>
-  //   <td class="date"> primeros 10 caracteres de la fecha: </td>
-  //
-  // Al final del map usa .join('') para unir todas las filas.
-
-  const rows = /* TU CÓDIGO AQUÍ → scores.map((s, i) => `...`).join('') */ '';
-
-
-  // TODO #6c — Inyectar la tabla completa en #history-content
-  // ─────────────────────────────────────────────────────────────────────────
-  // La tabla tiene 4 columnas: #, Puntaje, Nivel, Fecha
-  
-
-  /* TU CÓDIGO AQUÍ */
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asteroids — Game Over</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <div class="gameover-box">
+
+    <h1 class="gameover-title">GAME OVER</h1>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-label">Puntaje</span>
+        <span class="stat-value" id="stat-score">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Nivel</span>
+        <span class="stat-value" id="stat-level">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Asteroides</span>
+        <span class="stat-value" id="stat-asteroids">—</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Tiempo</span>
+        <span class="stat-value" id="stat-time">—</span>
+      </div>
+    </div>
+
+    <div id="personal-best" class="personal-best hidden">
+      <span id="personal-best-text"></span>
+    </div>
+
+    <div class="btn-col">
+      <button id="btn-play-again">▶ Jugar de nuevo</button>
+      <button id="btn-home" class="secondary">🏠 Ir al inicio</button>
+    </div>
+
+  </div>
+
+  <script src="../src/ui/gameover.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asteroids</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <!-- Menú de pausa (oculto por defecto, se activa con la tecla P) -->
+  <div id="pause-menu" class="pause-menu hidden">
+    <div class="pause-box">
+      <h2>PAUSA</h2>
+      <div class="btn-col">
+        <button id="btn-resume">▶ Continuar</button>
+        <button id="btn-save-quit" class="secondary">💾 Guardar y salir</button>
+        <button id="btn-quit"      class="secondary">🏠 Salir sin guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../src/game/game.js"></script>
+
+</body>
+</html>
