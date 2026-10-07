@@ -4,7 +4,7 @@ import { W, H,
         SHOOTING_STAR_INTERVAL_MIN,
         SHOOTING_STAR_INTERVAL_MAX } from '../utils/constants.js';
 import { Asteroid } from '../entities/Asteroid.js';
-// import { ShootingAsteroid } from '../entities/ShootingAsteroid.js';
+import { ShootingAsteroid } from '../entities/ShootingAsteroid.js';
 import { gameState } from '../core/GameState.js';
 
 export const SpawnSystem = {
@@ -15,11 +15,8 @@ export const SpawnSystem = {
             let x, y;
 
             do {
-                // TODO: Descomentar
-                // x = rand(0, W);
-                // y = rand(0, H);
-                x = 200;
-                y = 278
+                x = rand(0, W);
+                y = rand(0, H);
             } while (Math.hypot(x - W/2, y - H/2) < SAFE_SPAWN_DIST);
 
             gameState.asteroids.push(new Asteroid(x, y, 3));
@@ -31,11 +28,8 @@ export const SpawnSystem = {
             SHOOTING_STAR_INTERVAL_MIN,
             SHOOTING_STAR_INTERVAL_MAX
         );
-        //TODO: Descomentar
-        // this.spawnAsteroids( INITIAL_ASTEROIDS + ( gameState.level - 1 ) * 1);
-        this.spawnAsteroids(1);
-        //TODO QUITAR
-        // gameState.shootingStars.push(new ShootingAsteroid());
+        
+        this.spawnAsteroids( INITIAL_ASTEROIDS + ( gameState.level - 1 ) * 1);
     },
 
     update(dt) {

@@ -168,7 +168,7 @@ function update(dt) {
   if (input.pressed('Space')) gameState.bullets.push(...gameState.ship.tryShoot());
   
   //  TODO: Descomentar
-  // SpawnSystem.update(dt);
+  SpawnSystem.update(dt);
   // gameState.ship.update(dt);
   gameState.bullets.forEach(b => b.update(dt));
   gameState.asteroids.forEach(a => a.update(dt));

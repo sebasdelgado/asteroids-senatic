@@ -41,8 +41,7 @@ class GameLoop {
       ? 0
       : Math.min((ts - this._lastTime) / 1000, 0.05);
     this._lastTime = ts;
-    // TODO: Descomentar
-    // this._onUpdate(dt);
+    this._onUpdate(dt);
     this._onDraw();
     this._rafId = requestAnimationFrame(ts2 => this._tick(ts2));
   }
