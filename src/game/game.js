@@ -68,7 +68,7 @@ function startGame() {
   asteroidsDestroyed = 0;
   accumulatedTime    = 0;
   //  TODO: Descomentar
-  // SpawnSystem.initLevel();
+  SpawnSystem.initLevel();
   gameLoop.start(update, draw);
 }
 

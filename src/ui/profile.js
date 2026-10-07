@@ -3,19 +3,6 @@ import { requireLogin } from './auth-guard.js';
 
 const SERVER = '../server';
 
-
-// TODO #2 — Ejecutar la lógica principal con requireLogin
-// ─────────────────────────────────────────────────────────────────────────────
-// Todo el código de la página va dentro de:
-//   if (await requireLogin()) { ... }
-//
-// Dentro del if debes hacer:
-//
-//
-//   c) Conectar los seis botones (ver TODO #3).
-//
-//   d) Hacer fetch al historial (ver TODO #4), dentro de try/catch.
-
 //TODO Descomentar
 // if (await requireLogin() ) {
 if( true ) {
