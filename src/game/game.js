@@ -4,16 +4,9 @@ import { gameState, GameState } from '../core/GameState.js';
 import { input }                from '../core/InputManager.js';
 import { Renderer }             from '../renderer/Renderer.js';
 import { SpawnSystem }          from '../systems/SpawnSystem.js';
-//  TODO: Descomentar
-// import { CollisionSystem }      from '../systems/CollisionSystem.js';
-// import { Ship }                 from '../entities/Ship.js';
+import { CollisionSystem }      from '../systems/CollisionSystem.js';
+import { Ship }                 from '../entities/Ship.js';
 import { Asteroid }             from '../entities/Asteroid.js';
-import { rand }                 from '../utils/math.js';
-import {
-  INITIAL_ASTEROIDS,
-  SHOOTING_STAR_INTERVAL_MIN,
-  SHOOTING_STAR_INTERVAL_MAX,
-} from '../utils/constants.js';
 
 // ── Restaurar sesión ──────────────────────────────────────────────────────────
 const token    = localStorage.getItem('token');
@@ -62,12 +55,10 @@ document.getElementById('btn-quit').addEventListener('click', () => {
 function startGame() {
   gameState.resetGame();
   gameState.screen   = 'playing';
-  //  TODO: Descomentar
-  // gameState.ship     = new Ship();
+  gameState.ship     = new Ship();
   gameStartTime      = Date.now();
   asteroidsDestroyed = 0;
   accumulatedTime    = 0;
-  //  TODO: Descomentar
   SpawnSystem.initLevel();
   gameLoop.start(update, draw);
 }
@@ -80,6 +71,8 @@ function resumeGame(snap) {
   gameState.level  = snap.level;
   gameState.screen = 'playing';
   gameState.shootingStarTimer = snap.shootingStarTimer;
+  gameState.starsDestroyed    = snap.starsDestroyed   ?? 0;
+  gameState.shieldsCollected  = snap.shieldsCollected ?? 0;
   accumulatedTime    = snap.timePlayed ?? 0;
   asteroidsDestroyed = snap.asteroidsDestroyed ?? 0;
 
@@ -116,11 +109,7 @@ function nextLevel() {
   gameState.powerups      = [];
   gameState.shootingStars = [];
   gameState.ship.reset();
-  gameState.shootingStarTimer = rand(
-    SHOOTING_STAR_INTERVAL_MIN,
-    SHOOTING_STAR_INTERVAL_MAX
-  );
-  SpawnSystem.spawnAsteroids(INITIAL_ASTEROIDS + gameState.level - 1);
+  SpawnSystem.initLevel();
 }
 
 function goToGameOver() {
@@ -130,6 +119,8 @@ function goToGameOver() {
     score: gameState.score,
     level: gameState.level,
     asteroidsDestroyed,
+    starsDestroyed:   gameState.starsDestroyed,
+    shieldsCollected: gameState.shieldsCollected,
     timePlayed: elapsed,
   }));
   gameState.clearSnapshot();
@@ -166,27 +157,21 @@ function update(dt) {
 
   // ── playing ───────────────────────────────────────────────────────────────
   if (input.pressed('Space')) gameState.bullets.push(...gameState.ship.tryShoot());
-  
-  //  TODO: Descomentar
+
   SpawnSystem.update(dt);
-  // gameState.ship.update(dt);
+  gameState.ship.update(dt);
   gameState.bullets.forEach(b => b.update(dt));
   gameState.asteroids.forEach(a => a.update(dt));
   gameState.particles.forEach(p => p.update(dt));
   gameState.powerups.forEach(p => p.update(dt));
   gameState.shootingStars.forEach(s => s.update(dt));
 
-  const prevCount     = gameState.asteroids.length;
   gameState.bullets       = gameState.bullets.filter(b => !b.dead);
   gameState.particles     = gameState.particles.filter(p => !p.dead);
   gameState.powerups      = gameState.powerups.filter(p => !p.dead);
   gameState.shootingStars = gameState.shootingStars.filter(s => !s.dead);
 
-  //  TODO: Descomentar
-  // CollisionSystem.update();
-
-  const destroyed = prevCount - gameState.asteroids.filter(a => !a.dead).length;
-  if (destroyed > 0) asteroidsDestroyed += destroyed;
+  asteroidsDestroyed += CollisionSystem.update();
 
   if (gameState.asteroids.length === 0) nextLevel();
 }

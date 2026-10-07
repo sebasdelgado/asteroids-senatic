@@ -22,6 +22,10 @@ export class GameState {
 
     this.deadTimer         = 0;
     this.shootingStarTimer = 0;
+
+    // Estadísticas para logros (shoot_star, powerup_shield)
+    this.starsDestroyed   = 0;
+    this.shieldsCollected = 0;
   }
 
   setUser(user)    { this.user = user; }
@@ -39,6 +43,8 @@ export class GameState {
       level:  this.level,
       screen: this.screen,
       shootingStarTimer: this.shootingStarTimer,
+      starsDestroyed:   this.starsDestroyed,
+      shieldsCollected: this.shieldsCollected,
       asteroidsDestroyed,
       timePlayed,
 

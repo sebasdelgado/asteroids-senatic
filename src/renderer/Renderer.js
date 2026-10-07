@@ -1,8 +1,7 @@
 import { W, H }        from '../utils/constants.js';
 import { gameState }    from '../core/GameState.js';
-//  TODO: Descomentar
-// import { drawHUD }      from './HUD.js';
-// import { drawOverlay }  from './Overlays.js';
+import { drawHUD }      from './HUD.js';
+import { drawOverlay }  from './Overlays.js';
 
 export class Renderer {
   constructor(canvas) {
@@ -30,12 +29,10 @@ export class Renderer {
 
     // UI sobre el canvas
     if (screen !== 'login' && screen !== 'leaderboard') {
-      //  TODO: Descomentar
-      // drawHUD(ctx);
+      drawHUD(ctx);
     }
     if (screen === 'gameover') {
-      //  TODO: Descomentar
-      // drawOverlay(ctx);
+      drawOverlay(ctx);
     }
   }
 }
